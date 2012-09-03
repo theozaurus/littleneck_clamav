@@ -2,7 +2,7 @@ Littleneck ClamAV [![Build status](https://secure.travis-ci.org/theozaurus/littl
 =================
 
 [Littleneck ClamAV](http://github.com/theozaurus/littleneck_clamav) is a thin
-wrapper to make it fast and easy to use [ClamAV](http://www.clamav.net) within
+wrapper to make it quick and easy to use [ClamAV](http://www.clamav.net) within
 Ruby.
 
 It will use `clamdscan` if available to save load time, or fallback to
@@ -22,29 +22,29 @@ Usage
 
 To scan a file:
 
-  scanner = LittleneckClamAV.new
-  result = scanner.scan "jeepers.txt"
-  result.clean?
-  => false
-  result.infected?
-  => true
-  result.description
-  => "HLLP.Creeper.5127"
-  result.path
-  => "jeepers.txt"
+    scanner = LittleneckClamAV.new
+    result = scanner.scan "jeepers.txt"
+    result.clean?
+    => false
+    result.infected?
+    => true
+    result.description
+    => "HLLP.Creeper.5127"
+    result.path
+    => "jeepers.txt"
 
 To find out about the scanners database
 
-  scanner.database_version
-  => 15306
-  scanner.database_date
-  => 2012-08-28 20:18:12 +00:00
-  scanner.engine
-  => "0.97.5"
+    scanner.database_version
+    => 15306
+    scanner.database_date
+    => 2012-08-28 20:18:12 +00:00
+    scanner.engine
+    => "0.97.5"
 
 You can specify a specific scanner to use as well
 
-  scanner = LittleneckClamAV::Clam.new
-  # or
-  scanner = LittleneckClamAV::Clamd.new
+    scanner = LittleneckClamAV::Clam.new
+    # or
+    scanner = LittleneckClamAV::Clamd.new
 

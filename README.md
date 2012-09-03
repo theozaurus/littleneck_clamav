@@ -1,4 +1,4 @@
-Littleneck ClamAV [![Build status](https://secure.travis-ci.org/theozaurus/littleneck ClamAV.png)](http://travis-ci.org/theozaurus/littleneck_clamav)
+Littleneck ClamAV [![Build status](https://secure.travis-ci.org/theozaurus/littleneck_clamav.png)](http://travis-ci.org/theozaurus/littleneck_clamav)
 =================
 
 [Littleneck ClamAV](http://github.com/theozaurus/littleneck_clamav) is a thin

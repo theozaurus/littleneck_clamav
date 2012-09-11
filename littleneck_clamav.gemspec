@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 2.11'
 
-  s.files        = Dir.glob("lib/**/*") + %w(LICENSE README.mdown)
+  s.files        = Dir.glob("lib/**/*") + %w(LICENSE README.md)
   s.test_files   = Dir.glob("spec/**/*") + %w(.rspec)
   s.require_path = 'lib'
 end

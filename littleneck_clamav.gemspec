@@ -13,7 +13,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'cocaine'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '~> 2.11'
+  s.add_development_dependency 'rspec',       '~> 2.14.1'
+  s.add_development_dependency 'rspec-mocks', '~> 2.14.1'
 
   s.files        = Dir.glob("lib/**/*") + %w(LICENSE README.md)
   s.test_files   = Dir.glob("spec/**/*") + %w(.rspec)

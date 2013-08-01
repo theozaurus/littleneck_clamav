@@ -7,7 +7,7 @@ describe LittleneckClamAV do
     describe "engine" do
 
       it "should call `engine` on the scanner" do
-        scanner = mock("scanner")
+        scanner = double("scanner")
         scanner.should_receive :engine
         subject.stub( :scanner => scanner )
 
@@ -19,7 +19,7 @@ describe LittleneckClamAV do
     describe "database_version" do
 
       it "should call `database_version` on the scanner" do
-        scanner = mock("scanner")
+        scanner = double("scanner")
         scanner.should_receive :database_version
         subject.stub( :scanner => scanner )
 
@@ -31,7 +31,7 @@ describe LittleneckClamAV do
     describe "database_date" do
 
       it "should call `database_date` on the scanner" do
-        scanner = mock("scanner")
+        scanner = double("scanner")
         scanner.should_receive :database_date
         subject.stub( :scanner => scanner )
 
@@ -59,7 +59,7 @@ describe LittleneckClamAV do
     describe "scan" do
 
       it "should call `scan` on the scanner" do
-        scanner = mock("scanner")
+        scanner = double("scanner")
         scanner.should_receive :scan
         subject.stub( :scanner => scanner )
 

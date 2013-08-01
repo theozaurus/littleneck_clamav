@@ -1,24 +1,5 @@
 shared_examples_for "a scanner" do
 
-  def mock_cocaine(cocaine_options={})
-    options = { :output => "", :exitvalue => 0 }.merge( cocaine_options )
-    mock = Cocaine::CommandLine.should_receive( :new )
-    mock = mock.with(
-      options[:cmd], options[:opts], options[:params]
-    ) if options[:cmd] || options[:opts] || options[:params]
-
-    if cocaine_options[:raise]
-      mock.and_raise cocaine_options[:raise]
-    else
-      mock.and_return(
-        double "cocaine command", :run => options[:output]
-      )
-    end
-
-    `true`  if options[:exitvalue] == 0
-    `false` if options[:exitvalue] == 1
-  end
-
  describe "instance method" do
 
     describe "engine" do
@@ -86,19 +67,6 @@ shared_examples_for "a scanner" do
     end
 
     describe "scan" do
-
-      it "should call Cocaine" do
-        file = __FILE__
-
-        subject.stub(:available?).and_return(true)
-
-        mock_cocaine :cmd => subject.command,
-                     :opts => "--no-summary #{file}",
-                     :params => { :swallow_stderr => true, :expected_outcodes => [0, 1] },
-                     :output => "#{file}: OK"
-
-        subject.scan file
-      end
 
       it "should create a Result" do
         file = __FILE__

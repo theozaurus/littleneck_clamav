@@ -11,7 +11,7 @@ class LittleneckClamAV
     def scan(path)
       check_scan! path
       opts = { :swallow_stderr => true, :expected_outcodes => [0, 1] }
-      params = "--no-summary -<#{path}"
+      params = %Q{--no-summary -<"#{path}"}
       output = Cocaine::CommandLine.new( command, params, opts ).run
       parse_result path, output, $?.exitstatus
     end

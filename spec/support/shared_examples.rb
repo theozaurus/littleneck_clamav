@@ -11,7 +11,7 @@ shared_examples_for "a scanner" do
 
       it "should interpret the return value correctly" do
         mock_cocaine :output => "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
-        subject.engine.should == "0.97.5"
+        expect(subject.engine).to eql("0.97.5")
       end
 
     end
@@ -25,7 +25,7 @@ shared_examples_for "a scanner" do
 
       it "should interpret the return value correctly" do
         mock_cocaine :output => "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
-        subject.database_version.should == 15306
+        expect(subject.database_version).to eql(15306)
       end
 
     end
@@ -39,7 +39,7 @@ shared_examples_for "a scanner" do
 
       it "should interpret the return value correctly" do
         mock_cocaine :output => "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
-        subject.database_date.should == Time.parse("Tue Aug 28 20:18:12 2012")
+        expect(subject.database_date).to eql(Time.parse("Tue Aug 28 20:18:12 2012"))
       end
 
     end
@@ -49,19 +49,19 @@ shared_examples_for "a scanner" do
       it "should return true when Cocaine returns okay" do
         mock_cocaine :output => "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
 
-        subject.available?.should == true
+        expect(subject.available?).to be(true)
       end
 
       it "should return false when command errors" do
-        mock_cocaine :raise => Cocaine::ExitStatusError.new( "oh noes" )
+        mock_cocaine :raise => Cocaine::ExitStatusError.new("oh noes")
 
-        subject.available?.should == false
+        expect(subject.available?).to be(false)
       end
 
       it "should return false when command is not found" do
         mock_cocaine :raise => Cocaine::CommandNotFoundError
 
-        subject.available?.should == false
+        expect(subject.available?).to be(false)
       end
 
     end
@@ -71,25 +71,25 @@ shared_examples_for "a scanner" do
       it "should create a Result" do
         file = __FILE__
 
-        subject.stub(:available?).and_return(true)
+        allow(subject).to receive(:available?).and_return(true)
 
         mock_cocaine :output => "#{file}: OK\n"
 
-        LittleneckClamAV::Result.should_receive(:new).with(:path => file, :clean => true, :description => "OK")
+        expect(LittleneckClamAV::Result).to receive(:new).with(:path => file, :clean => true, :description => "OK")
 
         subject.scan file
       end
 
       it "should raise an error if the path does not exist" do
-        lambda { subject.scan "foo" }.should raise_error( LittleneckClamAV::Error )
+        expect { subject.scan "foo" }.to raise_error(LittleneckClamAV::Error)
       end
 
       it "should raise an error if it is not available" do
         file = __FILE__
 
-        subject.stub(:available?).and_return(false)
+        allow(subject).to receive(:available?).and_return(false)
 
-        lambda { subject.scan "foo" }.should raise_error( LittleneckClamAV::Error )
+        expect { subject.scan "foo" }.to raise_error(LittleneckClamAV::Error)
       end
 
     end

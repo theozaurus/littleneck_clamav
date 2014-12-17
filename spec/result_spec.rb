@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe LittleneckClamAV::Result do
+RSpec.describe LittleneckClamAV::Result do
 
   describe "instance method" do
 
@@ -8,12 +8,12 @@ describe LittleneckClamAV::Result do
 
       it "should return true when infected" do
         result = result_factory :clean => false
-        result.infected?.should be_true
+        expect(result.infected?).to be(true)
       end
 
       it "should return false when clean" do
         result = result_factory :clean => true
-        result.infected?.should be_false
+        expect(result.infected?).to be(false)
       end
 
     end
@@ -22,12 +22,12 @@ describe LittleneckClamAV::Result do
 
       it "should return true when clean" do
         result = result_factory :clean => true
-        result.clean?.should be_true
+        expect(result.clean?).to be(true)
       end
 
       it "should return false when infected" do
         result = result_factory :clean => false
-        result.clean?.should be_false
+        expect(result.clean?).to be(false)
       end
 
     end
@@ -36,7 +36,7 @@ describe LittleneckClamAV::Result do
 
       it "should return the description passed in" do
         result = result_factory :description => "Hello"
-        result.description.should == "Hello"
+        expect(result.description).to  eql("Hello")
       end
 
     end
@@ -45,7 +45,7 @@ describe LittleneckClamAV::Result do
 
       it "should return the path passed in" do
         result = result_factory :path => "foo/bar"
-        result.path.should == "foo/bar"
+        expect(result.path).to  eql("foo/bar")
       end
 
     end

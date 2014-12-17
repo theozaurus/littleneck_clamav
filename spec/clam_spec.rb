@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe LittleneckClamAV::Clam do
+RSpec.describe LittleneckClamAV::Clam do
 
   it_behaves_like "a scanner"
 
@@ -9,7 +9,7 @@ describe LittleneckClamAV::Clam do
     describe "command" do
 
       it "should return clamdscan" do
-        subject.command.should == "clamscan"
+        expect(subject.command).to eql("clamscan")
       end
 
     end
@@ -19,7 +19,7 @@ describe LittleneckClamAV::Clam do
       it "should call Cocaine" do
         file = __FILE__
 
-        subject.stub(:available?).and_return(true)
+        allow(subject).to receive(:available?).and_return(true)
 
         mock_cocaine :cmd => subject.command,
                      :opts => %Q{--no-summary "#{file}"},

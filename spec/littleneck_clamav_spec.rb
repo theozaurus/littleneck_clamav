@@ -1,15 +1,16 @@
 require "spec_helper"
 
-describe LittleneckClamAV do
+RSpec.describe LittleneckClamAV do
 
   describe "instance method" do
+
+    let(:scanner) { double("scanner") }
 
     describe "engine" do
 
       it "should call `engine` on the scanner" do
-        scanner = double("scanner")
-        scanner.should_receive :engine
-        subject.stub( :scanner => scanner )
+        expect(scanner).to receive(:engine)
+        allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.engine
       end
@@ -19,9 +20,8 @@ describe LittleneckClamAV do
     describe "database_version" do
 
       it "should call `database_version` on the scanner" do
-        scanner = double("scanner")
-        scanner.should_receive :database_version
-        subject.stub( :scanner => scanner )
+        expect(scanner).to receive(:database_version)
+        allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.database_version
       end
@@ -31,9 +31,8 @@ describe LittleneckClamAV do
     describe "database_date" do
 
       it "should call `database_date` on the scanner" do
-        scanner = double("scanner")
-        scanner.should_receive :database_date
-        subject.stub( :scanner => scanner )
+        expect(scanner).to receive(:database_date)
+        allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.database_date
       end
@@ -43,15 +42,15 @@ describe LittleneckClamAV do
     describe "available?" do
 
       it "should return true if a scanner is available" do
-        subject.stub( :scanner => Object.new )
+        allow(subject).to receive(:scanner).and_return(Object.new)
 
-        subject.available?.should == true
+        expect(subject.available?).to be(true)
       end
 
       it "should return false if a scanner is not available" do
-        subject.stub( :scanner => nil )
+        allow(subject).to receive(:scanner).and_return(nil)
 
-        subject.available?.should == false
+        expect(subject.available?).to be(false)
       end
 
     end
@@ -59,9 +58,8 @@ describe LittleneckClamAV do
     describe "scan" do
 
       it "should call `scan` on the scanner" do
-        scanner = double("scanner")
-        scanner.should_receive :scan
-        subject.stub( :scanner => scanner )
+        expect(scanner).to receive(:scan)
+        allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.scan
       end
@@ -71,23 +69,28 @@ describe LittleneckClamAV do
     describe "scanner" do
 
       it "should return Clamd if available" do
-        LittleneckClamAV::Clamd.any_instance.stub(:available? => true)
+        allow_any_instance_of(LittleneckClamAV::Clamd).to(
+          receive(:available?).and_return(true))
 
-        subject.scanner.should be_a LittleneckClamAV::Clamd
+        expect(subject.scanner).to be_a(LittleneckClamAV::Clamd)
       end
 
       it "should return Clam if Clamd is not available" do
-        LittleneckClamAV::Clamd.any_instance.stub(:available? => false)
-        LittleneckClamAV::Clam.any_instance.stub(:available? => true)
+        allow_any_instance_of(LittleneckClamAV::Clamd).to(
+          receive(:available?).and_return(false))
+        allow_any_instance_of(LittleneckClamAV::Clam).to(
+          receive(:available?).and_return(true))
 
-        subject.scanner.should be_a LittleneckClamAV::Clam
+        expect(subject.scanner).to be_a(LittleneckClamAV::Clam)
       end
 
       it "should raise an error if neither are available" do
-        LittleneckClamAV::Clamd.any_instance.stub(:available? => false)
-        LittleneckClamAV::Clam.any_instance.stub(:available? => false)
+        allow_any_instance_of(LittleneckClamAV::Clamd).to(
+          receive(:available?).and_return(false))
+        allow_any_instance_of(LittleneckClamAV::Clam).to(
+          receive(:available?).and_return(false))
 
-        lambda { subject.scanner }.should raise_error( LittleneckClamAV::Error )
+        expect{subject.scanner}.to raise_error(LittleneckClamAV::Error)
       end
 
     end

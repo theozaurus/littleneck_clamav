@@ -10,7 +10,7 @@ end
 
 def mock_cocaine(cocaine_options={})
   options = { :output => "", :exitvalue => 0 }.merge( cocaine_options )
-  mock = Cocaine::CommandLine.should_receive( :new )
+  mock = expect(Cocaine::CommandLine).to receive(:new)
   mock = mock.with(
     options[:cmd], options[:opts], options[:params]
   ) if options[:cmd] || options[:opts] || options[:params]

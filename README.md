@@ -16,6 +16,8 @@ Requirements
 It is currently fully tested against:
 
  - Ruby 1.9.3
+ - Ruby 2.0.0
+ - Ruby 2.1.2
 
 Usage
 =====

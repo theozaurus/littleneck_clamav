@@ -1,9 +1,6 @@
 shared_examples_for 'a scanner' do
-
   describe 'instance method' do
-
     describe 'engine' do
-
       it 'should call Cocaine with correct parameters' do
         mock_cocaine cmd: subject.command,
                      opts: '--version',
@@ -15,11 +12,9 @@ shared_examples_for 'a scanner' do
         mock_cocaine output: "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
         expect(subject.engine).to eql('0.97.5')
       end
-
     end
 
     describe 'database_version' do
-
       it 'should call Cocaine with correct parameters' do
         mock_cocaine cmd: subject.command,
                      opts: '--version',
@@ -31,11 +26,9 @@ shared_examples_for 'a scanner' do
         mock_cocaine output: "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
         expect(subject.database_version).to eql(15_306)
       end
-
     end
 
     describe 'database_version' do
-
       it 'should call Cocaine with correct parameters' do
         mock_cocaine cmd: subject.command,
                      opts: '--version',
@@ -49,11 +42,9 @@ shared_examples_for 'a scanner' do
           Time.parse('Tue Aug 28 20:18:12 2012')
         )
       end
-
     end
 
     describe 'available?' do
-
       it 'should return true when Cocaine returns okay' do
         mock_cocaine output: "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
 
@@ -71,11 +62,9 @@ shared_examples_for 'a scanner' do
 
         expect(subject.available?).to be(false)
       end
-
     end
 
     describe 'scan' do
-
       it 'should create a Result' do
         file = __FILE__
 
@@ -98,9 +87,6 @@ shared_examples_for 'a scanner' do
 
         expect { subject.scan 'foo' }.to raise_error(LittleneckClamAV::Error)
       end
-
     end
-
   end
-
 end

@@ -1,21 +1,16 @@
 require 'spec_helper'
 
 RSpec.describe LittleneckClamAV::Clam do
-
   it_behaves_like 'a scanner'
 
   describe 'instance method' do
-
     describe 'command' do
-
       it 'should return clamdscan' do
         expect(subject.command).to eql('clamscan')
       end
-
     end
 
     describe 'scan' do
-
       it 'should call Cocaine' do
         file = __FILE__
 
@@ -31,9 +26,6 @@ RSpec.describe LittleneckClamAV::Clam do
 
         subject.scan file
       end
-
     end
-
   end
-
 end

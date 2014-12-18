@@ -1,57 +1,46 @@
 require 'spec_helper'
 
 RSpec.describe LittleneckClamAV do
-
   describe 'instance method' do
-
     let(:scanner) { double('scanner') }
 
     describe 'engine' do
-
       it 'should call `engine` on the scanner' do
         expect(scanner).to receive(:engine)
         allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.engine
       end
-
     end
 
     describe 'database_version' do
-
       it 'should call `database_version` on the scanner' do
         expect(scanner).to receive(:database_version)
         allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.database_version
       end
-
     end
 
     describe 'database_date' do
-
       it 'should call `database_date` on the scanner' do
         expect(scanner).to receive(:database_date)
         allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.database_date
       end
-
     end
 
     describe 'scan' do
-
       it 'should call `scan` on the scanner' do
         expect(scanner).to receive(:scan)
         allow(subject).to receive(:scanner).and_return(scanner)
 
         subject.scan
       end
-
     end
 
     describe 'scanner' do
-
       it 'should return Clamd if available' do
         allow_any_instance_of(LittleneckClamAV::Clamd).to(
           receive(:available?).and_return(true))
@@ -76,9 +65,6 @@ RSpec.describe LittleneckClamAV do
 
         expect { subject.scanner }.to raise_error(LittleneckClamAV::Error)
       end
-
     end
-
   end
-
 end

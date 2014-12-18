@@ -1,16 +1,12 @@
 class LittleneckClamAV
-
   class Result
-
     def initialize(opts)
       @path        = opts[:path]
       @clean       = opts[:clean]
       @description = opts[:description]
     end
 
-    def path
-      @path
-    end
+    attr_reader :path
 
     def clean?
       @clean
@@ -20,10 +16,6 @@ class LittleneckClamAV
       !@clean
     end
 
-    def description
-      @description
-    end
-
+    attr_reader :description
   end
-
 end

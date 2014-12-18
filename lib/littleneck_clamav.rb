@@ -1,9 +1,8 @@
-require_relative "littleneck_clamav/clam"
-require_relative "littleneck_clamav/clamd"
-require_relative "littleneck_clamav/error"
+require_relative 'littleneck_clamav/clam'
+require_relative 'littleneck_clamav/clamd'
+require_relative 'littleneck_clamav/error'
 
 class LittleneckClamAV
-
   def engine
     scanner.engine
   end
@@ -26,13 +25,13 @@ class LittleneckClamAV
 
   def scanner
     @scanner ||= begin
-      scanner = scanners.find{|s| s.available? }
-      raise Error, "no scanner available, is ClamAV installed?" unless scanner
+      scanner = scanners.find(&:available?)
+      fail Error, 'no scanner available, is ClamAV installed?' unless scanner
       scanner
     end
   end
 
-private
+  private
 
   def preference
     [Clamd, Clam]
@@ -41,5 +40,4 @@ private
   def scanners
     @scanners ||= preference.map(&:new)
   end
-
 end

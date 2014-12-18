@@ -13,7 +13,6 @@ def mock_cocaine(cocaine_options = {})
 end
 
 class MockCocaine
-
   include RSpec::Mocks::ExampleMethods
 
   def initialize(options)
@@ -39,14 +38,11 @@ class MockCocaine
       options[:cmd], options[:opts], options[:params]
     ) if any_argument_options?
 
-    if options.has_key?(:raise)
-      mock.and_raise(options[:raise])
-    else
-      mock.and_return(cocain_command_double)
-    end
+    mock.and_return(cocaine_command_double)
+    mock.and_raise(options[:raise]) if options.key?(:raise)
   end
 
-  def cocain_command_double
+  def cocaine_command_double
     double 'cocaine command', run: options[:output]
   end
 

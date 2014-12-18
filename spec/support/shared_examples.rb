@@ -5,7 +5,9 @@ shared_examples_for 'a scanner' do
     describe 'engine' do
 
       it 'should call Cocaine with correct parameters' do
-        mock_cocaine cmd: subject.command, opts: '--version', params: { swallow_stderr: true }
+        mock_cocaine cmd: subject.command,
+                     opts: '--version',
+                     params: { swallow_stderr: true }
         subject.engine
       end
 
@@ -19,7 +21,9 @@ shared_examples_for 'a scanner' do
     describe 'database_version' do
 
       it 'should call Cocaine with correct parameters' do
-        mock_cocaine cmd: subject.command, opts: '--version', params: { swallow_stderr: true }
+        mock_cocaine cmd: subject.command,
+                     opts: '--version',
+                     params: { swallow_stderr: true }
         subject.database_version
       end
 
@@ -33,13 +37,17 @@ shared_examples_for 'a scanner' do
     describe 'database_version' do
 
       it 'should call Cocaine with correct parameters' do
-        mock_cocaine cmd: subject.command, opts: '--version', params: { swallow_stderr: true }
+        mock_cocaine cmd: subject.command,
+                     opts: '--version',
+                     params: { swallow_stderr: true }
         subject.database_date
       end
 
       it 'should interpret the return value correctly' do
         mock_cocaine output: "ClamAV 0.97.5/15306/Tue Aug 28 20:18:12 2012\n"
-        expect(subject.database_date).to eql(Time.parse('Tue Aug 28 20:18:12 2012'))
+        expect(subject.database_date).to eql(
+          Time.parse('Tue Aug 28 20:18:12 2012')
+        )
       end
 
     end
@@ -75,7 +83,8 @@ shared_examples_for 'a scanner' do
 
         mock_cocaine output: "#{file}: OK\n"
 
-        expect(LittleneckClamAV::Result).to receive(:new).with(path: file, clean: true, description: 'OK')
+        expect(LittleneckClamAV::Result).to receive(:new)
+          .with(path: file, clean: true, description: 'OK')
 
         subject.scan file
       end
@@ -85,8 +94,6 @@ shared_examples_for 'a scanner' do
       end
 
       it 'should raise an error if it is not available' do
-        file = __FILE__
-
         allow(subject).to receive(:available?).and_return(false)
 
         expect { subject.scan 'foo' }.to raise_error(LittleneckClamAV::Error)

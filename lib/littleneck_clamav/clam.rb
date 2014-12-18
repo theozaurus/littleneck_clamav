@@ -40,20 +40,23 @@ class LittleneckClamAV
       @version ||= begin
         opts = { swallow_stderr: true }
         params = '--version'
-        output = Cocaine::CommandLine.new(command, params, opts).run
-        output.strip!
-        engine, db_version, db_date = output.sub(/^ClamAV /, '').split('/', 3)
-        success = !!(db_version && db_date)
-        {
-          output: output,
-          engine: engine,
-          database_version: db_version,
-          database_date: db_date,
-          success: success
-        }
+        output = Cocaine::CommandLine.new(command, params, opts).run.strip
+        parse_output(output)
       rescue Cocaine::ExitStatusError, Cocaine::CommandNotFoundError => e
         { error: e.message, success: false }
       end
+    end
+
+    def parse_output(output)
+      engine, db_version, db_date = output.sub(/^ClamAV /, '').split('/', 3)
+      success = !(db_version && db_date).nil?
+      {
+        output: output,
+        engine: engine,
+        database_version: db_version,
+        database_date: db_date,
+        success: success
+      }
     end
 
     def parse_result(path, output, _code)

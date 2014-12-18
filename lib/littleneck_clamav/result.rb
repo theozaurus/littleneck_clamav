@@ -13,7 +13,7 @@ class LittleneckClamAV
     end
 
     def infected?
-      !@clean
+      !clean?
     end
 
     attr_reader :description

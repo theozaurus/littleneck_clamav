@@ -6,7 +6,10 @@ Gem::Specification.new do |s|
   s.author   = 'Theo Cushion'
   s.email    = 'theo.c@zepler.net'
   s.homepage = 'http://github.com/theozaurus/littleneck_clamav'
-  s.summary  = 'A thin wrapper to make it quick and easy to use ClamAV (daemonised or not) within Ruby'
+  s.summary  = [
+    'A thin wrapper to make it quick and easy to use ClamAV',
+    '(daemonised or not) within Ruby'
+  ].join(' ')
 
   s.required_rubygems_version = '>= 1.3.6'
 

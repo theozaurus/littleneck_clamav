@@ -1,4 +1,4 @@
-require 'english'
+require 'English'
 
 require_relative 'clam'
 

@@ -1,5 +1,5 @@
 require 'cocaine'
-require 'english'
+require 'English'
 require 'time'
 
 require_relative 'result'

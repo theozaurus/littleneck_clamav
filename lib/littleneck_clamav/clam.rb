@@ -1,4 +1,5 @@
 require 'cocaine'
+require 'english'
 require 'time'
 
 require_relative 'result'
@@ -27,7 +28,7 @@ class LittleneckClamAV
       opts = { swallow_stderr: true, expected_outcodes: [0, 1] }
       params = ['--no-summary', %("#{path}")].join(' ')
       output = Cocaine::CommandLine.new(command, params, opts).run
-      parse_result path, output, $?.exitstatus
+      parse_result path, output, $CHILD_STATUS.exitstatus
     end
 
     def command
@@ -60,7 +61,7 @@ class LittleneckClamAV
     end
 
     def parse_result(path, output, _code)
-      clean = $?.exitstatus == 0
+      clean = $CHILD_STATUS.exitstatus == 0
       description = output.split(':').last.strip
       description.sub! ' FOUND', ''
       Result.new path: path, clean: clean, description: description

@@ -53,5 +53,4 @@ class MockCocaine
   def setup_exit_value
     options[:exitvalue] == 0 ? `true` : `false`
   end
-
 end

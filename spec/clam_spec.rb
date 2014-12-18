@@ -23,7 +23,10 @@ RSpec.describe LittleneckClamAV::Clam do
 
         mock_cocaine cmd: subject.command,
                      opts: %(--no-summary "#{file}"),
-                     params: { swallow_stderr: true, expected_outcodes: [0, 1] },
+                     params: {
+                       swallow_stderr: true,
+                       expected_outcodes: [0, 1]
+                     },
                      output: "#{file}: OK"
 
         subject.scan file

@@ -33,17 +33,18 @@ class MockCocaine
   end
 
   def build_mock
-    mock = expect(Cocaine::CommandLine).to receive(:new)
-    mock.with(
-      options[:cmd], options[:opts], options[:params]
-    ) if any_argument_options?
-
-    mock.and_return(cocaine_command_double)
-    mock.and_raise(options[:raise]) if options.key?(:raise)
+    basic_mock = expect(Cocaine::CommandLine).to(receive(:new))
+    basic_mock.with(*cocaine_arguments) if any_argument_options?
+    basic_mock.and_return(cocaine_command_double)
+    basic_mock.and_raise(options[:raise]) if options.key?(:raise)
   end
 
   def cocaine_command_double
-    double 'cocaine command', run: options[:output]
+    double('cocaine command', run: options[:output])
+  end
+
+  def cocaine_arguments
+    [options[:cmd], options[:opts], options[:params]]
   end
 
   def any_argument_options?

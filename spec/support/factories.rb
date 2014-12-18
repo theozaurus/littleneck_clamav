@@ -9,20 +9,53 @@ def result_factory(override = {})
 end
 
 def mock_cocaine(cocaine_options = {})
-  options = { output: '', exitvalue: 0 }.merge(cocaine_options)
-  mock = expect(Cocaine::CommandLine).to receive(:new)
-  mock = mock.with(
-    options[:cmd], options[:opts], options[:params]
-  ) if options[:cmd] || options[:opts] || options[:params]
+  MockCocaine.new(cocaine_options).mock
+end
 
-  if cocaine_options[:raise]
-    mock.and_raise cocaine_options[:raise]
-  else
-    mock.and_return(
-      double 'cocaine command', run: options[:output]
-    )
+class MockCocaine
+
+  include RSpec::Mocks::ExampleMethods
+
+  def initialize(options)
+    @options = defaults.merge(options)
   end
 
-  `true`  if options[:exitvalue] == 0
-  `false` if options[:exitvalue] == 1
+  def mock
+    build_mock
+    setup_exit_value
+  end
+
+  private
+
+  attr_reader :options
+
+  def defaults
+    { output: '', exitvalue: 0 }
+  end
+
+  def build_mock
+    mock = expect(Cocaine::CommandLine).to receive(:new)
+    mock.with(
+      options[:cmd], options[:opts], options[:params]
+    ) if any_argument_options?
+
+    if options.has_key?(:raise)
+      mock.and_raise(options[:raise])
+    else
+      mock.and_return(cocain_command_double)
+    end
+  end
+
+  def cocain_command_double
+    double 'cocaine command', run: options[:output]
+  end
+
+  def any_argument_options?
+    options[:cmd] || options[:opts] || options[:params]
+  end
+
+  def setup_exit_value
+    options[:exitvalue] == 0 ? `true` : `false`
+  end
+
 end

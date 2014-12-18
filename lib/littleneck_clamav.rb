@@ -15,10 +15,6 @@ class LittleneckClamAV
     scanner.database_date
   end
 
-  def available?
-    !!scanner
-  end
-
   def scan(*args)
     scanner.scan(*args)
   end

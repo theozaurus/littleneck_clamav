@@ -39,22 +39,6 @@ RSpec.describe LittleneckClamAV do
 
     end
 
-    describe 'available?' do
-
-      it 'should return true if a scanner is available' do
-        allow(subject).to receive(:scanner).and_return(Object.new)
-
-        expect(subject.available?).to be(true)
-      end
-
-      it 'should return false if a scanner is not available' do
-        allow(subject).to receive(:scanner).and_return(nil)
-
-        expect(subject.available?).to be(false)
-      end
-
-    end
-
     describe 'scan' do
 
       it 'should call `scan` on the scanner' do
